@@ -2,23 +2,60 @@ let score = {
    wins: 0,
    loses: 0,
    draws: 0
+
 };
 
-function playRock(params) {
-   console.log("THe computer plays rock");
-   score.wins++;
+const moves = ["rock", "paper", "scissor"];
+
+
+function update() {
+   document.querySelector("#Wins").innerHTML = "Wins: " + score.wins;
+   document.querySelector("#Loses").innerHTML = "Loses: " + score.loses;
+   document.querySelector("#Draws").innerHTML = "Draws: " + score.draws;
 }
 
-function playPaper(params) {
-   console.log("THe computer plays Paper");
-   score.wins++;
-
+function computerMove() {
+   let randomMove = moves[Math.floor(Math.random() * moves.length)];
+   return randomMove;
 }
 
-function playScissor(params) {
-   console.log("THe computer plays Scissor");
-   score.wins++;
+function logic(playerMove, computerMove) {
+   if (playerMove === computerMove) {
+      score.draws++;
+      document.querySelector(".result").innerHTML = "Draw!";
+   } else if (
+      (playerMove === "rock" && computerMove === "scissor") ||
+      (playerMove === "paper" && computerMove === "rock") ||
+      (playerMove === "scissor" && computerMove === "paper")
+   ) {
+      score.wins++;
+      document.querySelector(".result").innerHTML = "You win!";
+   } else {
+      score.loses++;
+      document.querySelector(".result").innerHTML = "You lose!";
+   }
+   update();
+}
 
+function playRock() {
+   let computerChoice = computerMove();
+   document.querySelector(".output")
+      .innerHTML = "Computer plays: " + computerChoice.toUpperCase() + " Player plays: ROCK";
+   logic("rock", computerChoice);
+}
+
+function playPaper() {
+   let computerChoice = computerMove();
+   document.querySelector(".output")
+      .innerHTML = "Computer plays: " + computerChoice.toUpperCase() + " Player plays: PAPER";
+   logic("paper", computerChoice);
+}
+
+function playScissor() {
+   let computerChoice = computerMove();
+   document.querySelector(".output")
+      .innerHTML = "Computer plays: " + computerChoice.toUpperCase() + " Player plays: SCISSOR";
+   logic("scissor", computerChoice);
 }
 
 function resetScore() {
@@ -26,9 +63,5 @@ function resetScore() {
    score.draws = 0;
    score.loses = 0;
 
-   document.getElementById("Wins").innerText = "Wins: 0";
-   document.getElementById("Loses").innerText = "Loses: 0";
-   document.getElementById("Draws").innerText = "Draws: 0";
-
-   console.log("Scores have been reset");
+   update();
 }
