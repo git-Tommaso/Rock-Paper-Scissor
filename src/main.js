@@ -1,10 +1,4 @@
-let score = {
-   wins: 0,
-   loses: 0,
-   draws: 0
-
-};
-
+const score = JSON.parse(localStorage.getItem("score")) || { wins: 0, loses: 0, draws: 0 };
 const moves = ["rock", "paper", "scissor"];
 
 
@@ -12,6 +6,7 @@ function update() {
    document.querySelector("#Wins").innerHTML = "Wins: " + score.wins;
    document.querySelector("#Loses").innerHTML = "Loses: " + score.loses;
    document.querySelector("#Draws").innerHTML = "Draws: " + score.draws;
+   localStorage.setItem("score", JSON.stringify(score));
 }
 
 function computerMove() {
@@ -65,3 +60,5 @@ function resetScore() {
 
    update();
 }
+
+localStorage.setItem("score", JSON.stringify(score));
